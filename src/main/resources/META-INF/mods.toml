@@ -1,0 +1,23 @@
+modLoader="lowcodefml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="starblazercraft"
+version="0.0.1"
+displayName="Starblazer Craft"
+description='''機能を追加しない空の MOD です。'''
+
+[[dependencies.starblazercraft]]
+modId="forge"
+mandatory=true
+versionRange="[47,48)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.starblazercraft]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1]"
+ordering="NONE"
+side="BOTH"
