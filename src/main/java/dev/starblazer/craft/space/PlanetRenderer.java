@@ -76,17 +76,19 @@ public final class PlanetRenderer {
         projection.m22((far+near)/(near-far)).m32(2*far*near/(near-far));
         RenderSystem.setProjectionMatrix(projection,VertexSorting.DISTANCE_TO_ORIGIN);
         RenderSystem.depthMask(false);RenderSystem.disableDepthTest();
-        RenderSystem.disableBlend();RenderSystem.setShaderColor(1,1,1,1);
+        RenderSystem.disableBlend();RenderSystem.enableCull();RenderSystem.setShaderColor(1,1,1,1);
         try {
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
             BufferBuilder b=Tesselator.getInstance().getBuilder();
             b.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
             Matrix4f pose=event.getPoseStack().last().pose();
-            body(b,pose,EARTH,-position.x,SpaceBodies.EARTH_Y-position.y,-position.z);
             double distance=position.distanceTo(new net.minecraft.world.phys.Vec3(SpaceBodies.MOON_X,SpaceBodies.MOON_Y,SpaceBodies.MOON_Z));
-            // Earth before moon; both are background meshes before ordinary world terrain.
-            body(b,pose,distance<400?MOON_NEAR:MOON_FAR,
-                SpaceBodies.MOON_X-position.x,SpaceBodies.MOON_Y-position.y,SpaceBodies.MOON_Z-position.z);
+            double earthDistance=position.distanceTo(new net.minecraft.world.phys.Vec3(0,SpaceBodies.EARTH_Y,0));
+            float[] moon=distance<400?MOON_NEAR:MOON_FAR;
+            // Farther body first; depth writes are off during the background stage.
+            if(earthDistance>distance) body(b,pose,EARTH,-position.x,SpaceBodies.EARTH_Y-position.y,-position.z);
+            body(b,pose,moon,SpaceBodies.MOON_X-position.x,SpaceBodies.MOON_Y-position.y,SpaceBodies.MOON_Z-position.z);
+            if(earthDistance<=distance) body(b,pose,EARTH,-position.x,SpaceBodies.EARTH_Y-position.y,-position.z);
             BufferUploader.drawWithShader(b.end());
         } finally {
             RenderSystem.depthMask(true);RenderSystem.enableDepthTest();
