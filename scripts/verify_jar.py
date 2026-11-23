@@ -22,6 +22,13 @@ with ZipFile(path) as jar:
         'assets/starblazercraft/models/item/wrench.json',
         'assets/starblazercraft/textures/item/wrench.png',
         'data/starblazercraft/tags/blocks/assembly_cores.json',
+        'assets/starblazercraft/blockstates/core.json',
+        'assets/starblazercraft/models/block/core.json',
+        'assets/starblazercraft/models/item/core.json',
+        'assets/starblazercraft/textures/block/core.png',
+        'data/starblazercraft/loot_tables/blocks/core.json',
+        'data/minecraft/tags/blocks/mineable/pickaxe.json',
+        'data/minecraft/tags/blocks/needs_iron_tool.json',
     ):
         assert name in jar.namelist(), name
     assert not any(n.startswith(('docs/', 'tests/', 'scripts/')) for n in jar.namelist())

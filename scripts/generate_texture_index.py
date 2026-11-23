@@ -98,7 +98,7 @@ def png(image):
     out=io.BytesIO();image.save(out,format='PNG');return out.getvalue()
 
 
-def creative_tab_preview(texture):
+def creative_tab_preview(texture, core):
     """Documentation-only schematic, not a game screenshot or runtime GUI texture."""
     image = Image.new('RGBA', (360, 290), (28, 38, 52, 255))
     d = ImageDraw.Draw(image)
@@ -113,7 +113,8 @@ def creative_tab_preview(texture):
             x, y = 30 + col * 33, 88 + row * 31
             d.rectangle((x, y, x + 29, y + 27), fill='#8b8b8b', outline='#eeeeee')
     image.alpha_composite(icon, (33, 90))
-    d.text((30, 249), 'Wrench / more mod items in future', fill='#303030')
+    image.alpha_composite(core.resize((24,24), Image.Resampling.NEAREST), (66,90))
+    d.text((30, 249), 'Wrench / Core', fill='#303030')
     return image
 
 
@@ -121,7 +122,7 @@ def generate():
     models, paths, dimensions=collect([ROOT/'src/main/resources/assets',ROOT/'docs/examples/assets'])
     textures={key:Image.open(path).convert('RGBA') for key,path in paths.items()}
     outputs={}
-    outputs['docs/images/catalog/ui/creative-tab.png']=png(creative_tab_preview(textures['starblazercraft:item/wrench']))
+    outputs['docs/images/catalog/ui/creative-tab.png']=png(creative_tab_preview(textures['starblazercraft:item/wrench'], textures['starblazercraft:block/core']))
     lines=['# テクスチャ一覧', '', 'アイテム・ブロック・UI を追加／変更するたびに、この一覧と PNG 見本を更新します。',
            '', '**画像は JSON から生成した簡易見本で、ゲーム内スクリーンショットではありません。**',
            '手持ち画像は一人称右手の `display` 設定を適用したモデル単体の見本です（プレイヤーの手は描画しません）。',
