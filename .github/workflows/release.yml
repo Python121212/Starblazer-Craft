@@ -1,0 +1,22 @@
+name: Publish release
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s tests -v
+      - run: python scripts/asset_catalog.py
+      - name: Publish new version (existing releases are not overwritten)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(python -c "import tomllib; print(tomllib.load(open('src/main/resources/META-INF/mods.toml', 'rb'))['mods'][0]['version'])")
+          gh release create "v$VERSION" build/libs/*.jar --target "$GITHUB_SHA" --title "Starblazer Craft $VERSION — Forge 1.20.1" --notes "GitHub Actions でビルド・素材検査済み。ゲーム実起動は未検証。"

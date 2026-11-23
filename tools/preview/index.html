@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starblazer Craft — 素材ラボ</title><link rel="stylesheet" href="style.css">
+<header><small>STAR BLAZER / DEVELOPMENT TOOLS</small><h1>素材ラボ <span>ASSET LAB</span></h1><p>テクスチャとモデルを、ゲームを起動せずに確認。</p></header>
+<main><aside><h2>モデル一覧</h2><input id="filter" placeholder="モデル名で検索" aria-label="モデル名で検索"><div id="models"></div><p class="note">docs/examples の見本と src/main/resources の実素材を自動収集します。</p></aside>
+<section><div class="heading"><h2 id="name">読み込み中…</h2><button id="reset">視点を戻す</button></div><canvas id="view" width="800" height="560" aria-label="ドラッグで回転できる3Dモデル"></canvas><p class="note">ドラッグ：回転 ／ ホイール：拡大縮小。簡易プレビューでありゲーム内描画とは異なります。</p><p id="warning" role="status"></p><h2>参照テクスチャ</h2><div id="textures"></div><details><summary>モデル JSON を表示</summary><pre id="json"></pre></details></section></main>
+<footer>標準の立方体親モデル・elements・UV・面回転・要素回転に対応。バニラ画像、独自ローダー、アニメーション、display 変換は再現しません。</footer><script src="viewer.js"></script></html>
