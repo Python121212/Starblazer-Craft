@@ -40,7 +40,8 @@ JAR の構造とメタデータは検査していますが、Minecraft / Forge �
 ## GitHub 自動テスト・3D 素材ラボ
 
 push / PR ごとにテスト・ビルド・素材検査を実行し、JAR とブラウザー用ビューアーを Artifact に保存します。
-初回設定を行うと、main では GitHub Pages にも公開できます。
+サイトは自動更新しません。更新の依頼があるときだけ、main の手動実行で「サイトを更新する」を選択して公開します。
+普段の説明・仕様・進捗は主に Markdown を更新します。
 
 - [素材ラボ（テクスチャと回転可能な 3D 見本）](https://python121212.github.io/Starblazer-Craft/)
 - [操作方法・素材の追加・自動検査の範囲](docs/AUTOMATION.md)
