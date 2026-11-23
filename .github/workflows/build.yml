@@ -22,7 +22,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Unit tests and reproducible JAR check
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.8'
+      - name: Compile Forge mod and run Java tests
+        run: gradle --no-daemon build
+      - name: Verify compiled JAR contents
+        run: python scripts/verify_jar.py
+      - name: Resource tests
         run: python -m unittest discover -s tests -v
       - name: Validate assets and generate 3D preview
         run: python scripts/asset_catalog.py
@@ -39,7 +50,7 @@ jobs:
       - name: Test summary
         run: |
           echo '## 検査完了' >> "$GITHUB_STEP_SUMMARY"
-          echo '- 単体テスト・JAR 再現性・JSON 参照・PNG 整合性・JS 構文を検査しました。' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Java コンパイル・単体テスト・JSON 参照・PNG 整合性・JS 構文を検査しました。' >> "$GITHUB_STEP_SUMMARY"
           echo '- asset-preview を取得するか GitHub Pages で素材を確認できます。' >> "$GITHUB_STEP_SUMMARY"
           echo '- ゲーム起動・物理・描画・マルチの実機テストではありません。' >> "$GITHUB_STEP_SUMMARY"
   pages:

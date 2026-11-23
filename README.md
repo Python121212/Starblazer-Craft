@@ -1,49 +1,46 @@
 # Starblazer Craft
 
-Minecraft **1.20.1 / Forge 47.x** 用の、機能を一切追加しない空の MOD です。
+Minecraft **1.20.1 / Forge 47.x / Java 17** 用の独立 MOD です。Create などへの依存はありません。
+船・航空機・宇宙艦へ向けた基盤を段階的に実装します。
 
-Forge 標準の `lowcodefml` ローダーを使用し、MOD の認識に必要なメタデータのみを収録します。
-Java クラス、アイテム、ブロック、レシピなどはありません。
+## 現在の内容（0.1.0）
+
+- レンチアイテム（日本語・英語表示、16×16 オリジナルテクスチャ）。
+- 将来のコアを起点に対角2点を指定し、直方体の範囲を保存。
+- Shift＋左クリックで範囲外のブロックを追加選択。
+- コア・エンティティ化・物理は未実装。ワールドのブロックは変更しません。
+
+[レンチの操作・制限・テスト方法](docs/WRENCH.md)
 
 ## 導入
 
-1. Minecraft 1.20.1 と Forge 47.x をインストールします（実行には Java 17 が必要です）。
-2. [Releases](https://github.com/Python121212/Starblazer-Craft/releases) から JAR を取得します。
-3. 対象プロファイルの `mods` フォルダーに JAR を配置します。
+1. Minecraft 1.20.1 と Forge 47.x、Java 17 を用意します。
+2. [Releases](https://github.com/Python121212/Starblazer-Craft/releases) の該当バージョンの JAR を `mods` に配置します。
 
-クライアント・サーバー両対応のメタデータです。Fabric 用ではありません。
+旧 v0.0.1 は空の MOD です。レンチは v0.1.0 以降に含まれます。
 
-## ビルド
+## ビルドと検査
 
-Python 3.11 以降で実行できます。外部ライブラリ、JDK、ForgeGradle は不要です。
+Java の登録処理が必要なため、従来のメタデータ専用 JAR から **JavaFML / ForgeGradle** に移行しました。
+Java 17、Gradle 8.8、Python 3.11 以降を使用します。
 
 ```sh
-python3 scripts/build.py
+gradle --no-daemon build
+python3 -m unittest discover -s tests -v
+python3 scripts/asset_catalog.py
 ```
 
-出力: `build/libs/starblazer-craft-1.20.1-0.0.1.jar`
+JAR: `build/libs/starblazer-craft-1.20.1-0.1.0.jar`
 
-ソースは main、配布用 JAR は GitHub Releases に配置します。
-JAR はバージョン管理に含めません。
+GitHub Actions でも Forge コンパイル・Java の選択計算テスト・素材検査を行います。
+ゲーム実起動・マルチプレイの操作テストとは別です。
+ソースは main、配布 JAR は Releases に置き、JAR は Git 管理に含めません。
 
-## 動作確認について
+## 資料・素材確認
 
-JAR の構造とメタデータは検査していますが、Minecraft / Forge の実起動テストは未実施です。
+- [テクスチャ・JSON の日本語ガイド](docs/TEXTURES.md)
+- [自動テストと素材ラボの説明](docs/AUTOMATION.md)
+- [素材ラボ（最後に明示公開した版）](https://python121212.github.io/Starblazer-Craft/)
 
-## テクスチャ・JSON の見本
-
-[日本語ガイド](docs/TEXTURES.md) に、16×16 PNG の形とモデル・blockstates JSON の対応をまとめています。
-素材は `docs/examples/` にあり、現段階では JAR に入りません。ゲーム内の機能は追加していません。
-
-![上面・側面・アイテムの拡大見本](docs/images/texture-guide.png)
-
-## GitHub 自動テスト・3D 素材ラボ
-
-push / PR ごとにテスト・ビルド・素材検査を実行し、JAR とブラウザー用ビューアーを Artifact に保存します。
-サイトは自動更新しません。更新の依頼があるときだけ、main の手動実行で「サイトを更新する」を選択して公開します。
-普段の説明・仕様・進捗は主に Markdown を更新します。
-
-- [素材ラボ（テクスチャと回転可能な 3D 見本）](https://python121212.github.io/Starblazer-Craft/)
-- [操作方法・素材の追加・自動検査の範囲](docs/AUTOMATION.md)
-
-ゲーム実行テストではありません。現在は物理計算の実装・性能検査もまだ含まれません。
+説明・仕様・進捗は主に Markdown を更新します。
+**サイトは自動更新しません。**「ページを更新して」と指示されたときだけ明示的に公開します。

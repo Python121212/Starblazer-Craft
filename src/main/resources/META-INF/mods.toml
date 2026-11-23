@@ -1,12 +1,12 @@
-modLoader="lowcodefml"
+modLoader="javafml"
 loaderVersion="[47,)"
 license="All Rights Reserved"
 
 [[mods]]
 modId="starblazercraft"
-version="0.0.1"
+version="0.1.0"
 displayName="Starblazer Craft"
-description='''機能を追加しない空の MOD です。'''
+description='''独立した船体システムの試作。レンチによる範囲選択。'''
 
 [[dependencies.starblazercraft]]
 modId="forge"
