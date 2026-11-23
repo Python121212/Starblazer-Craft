@@ -57,7 +57,7 @@ models/item/example_crystal.json        ← 平面画像から描画するアイ
 見本の `assets/` を `src/main/resources/assets/` にコピーするとビルド対象になります。
 ただし **PNG と JSON を配置しただけでは、新しいブロックやアイテムは追加されません**。
 将来、Java の登録処理を実装し、登録 ID を `example_block` / `example_crystal` に合わせる必要があります。
-現在の `lowcodefml` のままでは Java の登録処理を実装できないため、その段階で JavaFML と ForgeGradle の開発構成へ移行します。
+本体はレンチ実装時に JavaFML / ForgeGradle へ移行済みですが、ここに掲載した説明用ブロックは未登録です。
 今回はその作業は行いません。
 
 ## 4. PNG を再生成する

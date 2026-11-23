@@ -1,0 +1,2 @@
+# Only required for Markdown PNG previews; the mod has no Python dependency.
+Pillow==12.0.0
