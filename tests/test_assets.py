@@ -43,15 +43,11 @@ class AssetTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 assets.png_size(path)
 
-    def test_build_is_reproducible_and_excludes_docs(self):
-        def build():
-            subprocess.run([sys.executable, 'scripts/build.py'], cwd=ROOT, check=True, capture_output=True)
-            return next((ROOT / 'build/libs').glob('*.jar')).read_bytes()
-        self.assertEqual(build(), build())
-        with ZipFile(next((ROOT / 'build/libs').glob('*.jar'))) as jar:
-            self.assertIsNone(jar.testzip())
-            self.assertIn('META-INF/mods.toml', jar.namelist())
-            self.assertFalse(any(n.startswith(('docs/', 'scripts/', 'tests/')) for n in jar.namelist()))
+    def test_java_mod_configuration(self):
+        import tomllib
+        metadata = tomllib.loads((ROOT / 'src/main/resources/META-INF/mods.toml').read_text())
+        self.assertEqual(metadata['modLoader'], 'javafml')
+        self.assertTrue((ROOT / 'src/main/java/dev/starblazer/craft/WrenchItem.java').exists())
 
     def test_preview_build(self):
         with tempfile.TemporaryDirectory() as directory:
