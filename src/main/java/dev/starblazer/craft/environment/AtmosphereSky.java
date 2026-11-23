@@ -51,6 +51,7 @@ public final class AtmosphereSky {
                 || living.hasEffect(net.minecraft.world.effect.MobEffects.DARKNESS))) return;
         var air = AtmosphereProfile.sample(camera.getPosition().y);
         if (air.darkness() <= 0) return;
+        float[] oldColor = RenderSystem.getShaderColor().clone();
         Matrix4f oldProjection = new Matrix4f(RenderSystem.getProjectionMatrix());
         var stack = RenderSystem.getModelViewStack();
         stack.pushPose(); stack.setIdentity();
@@ -59,6 +60,7 @@ public final class AtmosphereSky {
         RenderSystem.disableDepthTest(); RenderSystem.depthMask(false);
         RenderSystem.enableBlend(); RenderSystem.defaultBlendFunc();
         try {
+            RenderSystem.setShaderColor(1, 1, 1, 1);
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
             BufferBuilder b = Tesselator.getInstance().getBuilder();
             b.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
@@ -84,6 +86,7 @@ public final class AtmosphereSky {
             }
             BufferUploader.drawWithShader(b.end());
         } finally {
+            RenderSystem.setShaderColor(oldColor[0], oldColor[1], oldColor[2], oldColor[3]);
             RenderSystem.disableBlend(); RenderSystem.depthMask(true); RenderSystem.enableDepthTest();
             RenderSystem.setProjectionMatrix(oldProjection, VertexSorting.DISTANCE_TO_ORIGIN);
             stack.popPose(); RenderSystem.applyModelViewMatrix();

@@ -11,6 +11,10 @@ with ZipFile(path) as jar:
     for name in (
         'dev/starblazer/craft/StarblazerCraft.class',
         'dev/starblazer/craft/WrenchItem.class',
+        'dev/starblazer/craft/environment/AtmosphereProfile.class',
+        'dev/starblazer/craft/environment/AtmosphereEvents.class',
+        'dev/starblazer/craft/environment/AtmosphereClient.class',
+        'dev/starblazer/craft/environment/AtmosphereSky.class',
         'META-INF/mods.toml', 'pack.mcmeta',
         'assets/starblazercraft/models/item/wrench.json',
         'assets/starblazercraft/textures/item/wrench.png',

@@ -35,6 +35,17 @@ class AtmosphereProfileTest {
         assertEquals(1, AtmosphereProfile.sample(1500).oxygen());
         assertEquals(0, AtmosphereProfile.sample(2000).oxygen());
     }
+    @Test void hypoxiaGraceAndRecovery() {
+        float exposure = 0;
+        for (int tick=0; tick<199; tick++) exposure = AtmosphereProfile.advanceExposure(exposure, AtmosphereProfile.sample(2000));
+        assertEquals(199, exposure);
+        exposure = AtmosphereProfile.advanceExposure(exposure, AtmosphereProfile.sample(2000));
+        assertEquals(200, exposure);
+        assertEquals(200, AtmosphereProfile.advanceExposure(exposure, AtmosphereProfile.sample(5000)));
+        assertEquals(0, AtmosphereProfile.advanceExposure(exposure, AtmosphereProfile.sample(1500)));
+        assertEquals(1, AtmosphereProfile.advanceExposure(Float.NaN, AtmosphereProfile.sample(2000)));
+        assertTrue(AtmosphereProfile.advanceExposure(0, AtmosphereProfile.sample(1600)) < 1);
+    }
     @Test void velocityDependentEffects() {
         assertEquals(0, AtmosphereProfile.windStrength(5000, 100));
         assertTrue(AtmosphereProfile.windStrength(1000, 2) > AtmosphereProfile.windStrength(1000, 1));

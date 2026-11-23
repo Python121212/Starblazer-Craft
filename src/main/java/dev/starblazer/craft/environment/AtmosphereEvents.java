@@ -60,9 +60,7 @@ public final class AtmosphereEvents {
         applyMotion(player);
         if (air.gravity() < .05) player.fallDistance = 0;
         float exposure = player.getPersistentData().getFloat(EXPOSURE);
-        if (!Float.isFinite(exposure) || exposure < 0) exposure = 0;
-        if (y <= AtmosphereProfile.HYPOXIA_START) exposure = 0;
-        else exposure = Math.min(200, exposure + (float) (1 - air.oxygen()));
+        exposure = AtmosphereProfile.advanceExposure(exposure, air);
         player.getPersistentData().putFloat(EXPOSURE, exposure);
         if (exposure >= 200 && player.tickCount % 40 == 0) player.hurt(player.damageSources().drown(), 1.0F);
     }

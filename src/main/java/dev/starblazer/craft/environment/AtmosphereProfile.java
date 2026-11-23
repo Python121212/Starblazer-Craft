@@ -28,6 +28,12 @@ public final class AtmosphereProfile {
             smooth(320, MAX_ALTITUDE, y), smooth(2000, 3500, y));
     }
 
+    public static float advanceExposure(float previous, Sample air) {
+        if (!Float.isFinite(previous) || previous < 0) previous = 0;
+        if (air.oxygen() >= 1) return 0;
+        return Math.min(200, previous + (float) (1 - air.oxygen()));
+    }
+
     /** Relative wind strength and heating are bounded visual inputs, not damage physics. */
     public static double windStrength(double y, double speed) {
         checkSpeed(speed);
