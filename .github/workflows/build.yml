@@ -3,9 +3,11 @@ on:
   push:
     paths-ignore:
       - '画像/**'
+      - 'サウンド/**'
   pull_request:
     paths-ignore:
       - '画像/**'
+      - 'サウンド/**'
   workflow_dispatch:
     inputs:
       deploy_pages:
