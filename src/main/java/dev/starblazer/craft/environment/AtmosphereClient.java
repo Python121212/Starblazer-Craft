@@ -25,7 +25,10 @@ public final class AtmosphereClient {
         var level = Minecraft.getInstance().level;
         if (level == null || level.dimension() != Level.OVERWORLD) return;
         // Preserve water/lava/powder-snow fog and blindness effects.
-        if (event.getCamera().getFluidInCameraType() != net.minecraft.world.level.material.FogType.NONE) return;
+        if (event.getCamera().getFluidInCamera() != net.minecraft.world.level.material.FogType.NONE) return;
+        if (event.getCamera().getEntity() instanceof net.minecraft.world.entity.LivingEntity living
+                && (living.hasEffect(net.minecraft.world.effect.MobEffects.BLINDNESS)
+                || living.hasEffect(net.minecraft.world.effect.MobEffects.DARKNESS))) return;
         double blend = AtmosphereProfile.sample(event.getCamera().getPosition().y).darkness();
         event.setRed((float) (event.getRed() * (1 - blend) + .002 * blend));
         event.setGreen((float) (event.getGreen() * (1 - blend) + .004 * blend));

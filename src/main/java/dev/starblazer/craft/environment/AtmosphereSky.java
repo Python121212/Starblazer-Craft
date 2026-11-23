@@ -45,7 +45,10 @@ public final class AtmosphereSky {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.level.dimension() != Level.OVERWORLD) return;
         var camera = event.getCamera();
-        if (camera.getFluidInCameraType() != net.minecraft.world.level.material.FogType.NONE) return;
+        if (camera.getFluidInCamera() != net.minecraft.world.level.material.FogType.NONE) return;
+        if (camera.getEntity() instanceof net.minecraft.world.entity.LivingEntity living
+                && (living.hasEffect(net.minecraft.world.effect.MobEffects.BLINDNESS)
+                || living.hasEffect(net.minecraft.world.effect.MobEffects.DARKNESS))) return;
         var air = AtmosphereProfile.sample(camera.getPosition().y);
         if (air.darkness() <= 0) return;
         Matrix4f oldProjection = new Matrix4f(RenderSystem.getProjectionMatrix());

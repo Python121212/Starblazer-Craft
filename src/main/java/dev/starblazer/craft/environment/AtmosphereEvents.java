@@ -25,7 +25,8 @@ public final class AtmosphereEvents {
         if (attribute == null) return;
         var previous = attribute.getModifier(GRAVITY_ID);
         // 1% increments avoid synchronizing a changed attribute every tiny vertical step.
-        double amount = Math.round(multiplier * 100) / 100.0 - 1;
+        double quantized = multiplier > 0 ? Math.max(.01, Math.round(multiplier * 100) / 100.0) : 0;
+        double amount = quantized - 1;
         if (previous != null && Math.abs(previous.getAmount() - amount) < 1e-9) return;
         if (previous != null) attribute.removeModifier(GRAVITY_ID);
         if (amount != 0) attribute.addTransientModifier(new AttributeModifier(
