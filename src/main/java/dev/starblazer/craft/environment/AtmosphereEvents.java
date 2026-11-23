@@ -41,14 +41,6 @@ public final class AtmosphereEvents {
             player.getPersistentData().remove(EXPOSURE);
             return;
         }
-        // Flight ceiling, NOT an extension to vanilla's block build limit.
-        // Mounted assemblies need their own ceiling handling when vehicles exist.
-        if (!player.isPassenger() && player.getY() > AtmosphereProfile.MAX_ALTITUDE) {
-            Vec3 v = player.getDeltaMovement();
-            player.teleportTo(player.getX(), AtmosphereProfile.MAX_ALTITUDE, player.getZ());
-            player.setDeltaMovement(v.x, Math.min(0, v.y), v.z);
-            player.fallDistance = 0;
-        }
         if (player.isCreative() || player.isSpectator()) {
             gravity(player, 1);
             player.getPersistentData().remove(EXPOSURE);
@@ -56,7 +48,8 @@ public final class AtmosphereEvents {
         }
         double y = player.getY();
         AtmosphereProfile.Sample air = AtmosphereProfile.sample(y);
-        gravity(player, player.isPassenger() ? 1 : air.gravity());
+        gravity(player, player.isPassenger() ? 1 : dev.starblazer.craft.space.SpaceBodies.gravity(
+            player.getX(), y, player.getZ(), air.gravity()));
         applyMotion(player);
         if (air.gravity() < .05) player.fallDistance = 0;
         float exposure = player.getPersistentData().getFloat(EXPOSURE);
@@ -79,7 +72,7 @@ public final class AtmosphereEvents {
                 player.setDeltaMovement(v.x * (1 - .04 * loss), v.y - .025 * loss, v.z * (1 - .04 * loss));
             }
         }
-        // A way to leave the zero-gravity ceiling before propulsion exists.
+        // Temporary descent control in space before propulsion exists.
         if (y >= 4999.9 && player.isShiftKeyDown()) player.setDeltaMovement(player.getDeltaMovement().add(0, -.04, 0));
     }
 

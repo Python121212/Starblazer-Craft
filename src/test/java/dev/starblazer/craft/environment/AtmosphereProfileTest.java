@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AtmosphereProfileTest {
+    @Test void spaceContinuesAboveBoundary() {
+        assertEquals(AtmosphereProfile.Layer.SPACE, AtmosphereProfile.sample(100000).layer());
+        assertEquals(0, AtmosphereProfile.sample(100000).gravity());
+    }
     @Test void boundaries() {
         assertEquals(1, AtmosphereProfile.sample(320).density());
         assertEquals(.85, AtmosphereProfile.sample(800).density(), 1e-12);

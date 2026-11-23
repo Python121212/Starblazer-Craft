@@ -16,8 +16,10 @@ public final class AtmosphereClient {
 
     @SubscribeEvent
     public static void playerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.START && event.player.level().isClientSide
-                && event.player == Minecraft.getInstance().player) AtmosphereEvents.applyMotion(event.player);
+        if (event.player.level().isClientSide && event.player == Minecraft.getInstance().player) {
+            if (event.phase == TickEvent.Phase.START) AtmosphereEvents.applyMotion(event.player);
+            dev.starblazer.craft.space.MoonLanding.tick(event.player, event.phase);
+        }
     }
 
     @SubscribeEvent
