@@ -30,7 +30,10 @@ Pages の公開に失敗しても、成功済みのテストと Artifact は確�
 ## 自動で行う検査
 
 - Python 単体テスト（`tests/`）。将来の計算処理のテストを追加する場所です。
-- JAR のビルド、ZIP 整合性、同じ入力から同じ JAR が得られること。
+- Java 17 / Gradle 8.8 による Forge MOD のコンパイルと JAR ビルド。
+- JAR の ZIP 整合性・コンパイル済みクラスとレンチ素材の同梱・資料の除外。
+- Java の範囲計算テスト（端点の順序、境界、体積制限、整数オーバーフロー）。
+- JAR のファイル順とタイムスタンプは固定しますが、バイト単位の再現性検査は現在行っていません。
 - JSON の構文、ローカル親モデル・テクスチャ・blockstates のモデル参照。
 - 親モデル／テクスチャ変数の循環参照、重複した素材 ID。
 - PNG の署名・サイズ・CRC・圧縮データ。
@@ -71,9 +74,11 @@ JSON や PNG の追加だけではブロック自体は登録されません。
 
 ## ローカルで同じ検査を行う
 
-Python 3.11 以降と、JS 構文検査用の Node.js が必要です。追加ライブラリは不要です。
+Java のビルドには Java 17・Gradle 8.8 と Forge などの依存取得が必要です。
+素材検査には Python 3.11 以降、JS 構文検査には Node.js を使用します。Python 側の追加ライブラリは不要です。
 
 ```sh
+gradle --no-daemon build
 python3 -m unittest discover -s tests -v
 python3 scripts/asset_catalog.py
 node --check tools/preview/viewer.js

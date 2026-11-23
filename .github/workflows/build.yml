@@ -31,6 +31,8 @@ jobs:
           gradle-version: '8.8'
       - name: Compile Forge mod and run Java tests
         run: gradle --no-daemon build
+      - name: Verify compiled JAR contents
+        run: python scripts/verify_jar.py
       - name: Resource tests
         run: python -m unittest discover -s tests -v
       - name: Validate assets and generate 3D preview

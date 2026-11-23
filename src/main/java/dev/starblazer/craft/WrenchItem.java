@@ -40,6 +40,12 @@ public class WrenchItem extends Item {
     }
 
     @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        // Select containers and future interactive cores without opening their GUI first.
+        return useOn(context);
+    }
+
+    @Override
     public InteractionResult useOn(UseOnContext context) {
         Player p = context.getPlayer();
         if (p == null || !usable(p)) return InteractionResult.FAIL;
