@@ -38,6 +38,8 @@ Pages の公開に失敗しても、成功済みのテストと Artifact は確�
 - 親モデル／テクスチャ変数の循環参照、重複した素材 ID。
 - PNG の署名・サイズ・CRC・圧縮データ。
 - 素材ビューアーの生成と JavaScript 構文。
+- `テクスチャ一覧.md` とモデル PNG が現在の素材に一致するかの検査。
+- レンチが厚みを持ち、左右の手持ち表示設定を持つこと。
 
 **まだ物理エンジンは実装されていないため、重力・浮力の計算テストや負荷測定はありません。**
 これは Minecraft / Forge 起動テスト、完全なリソース仕様検証、ブラウザー描画テストの代替ではありません。
@@ -75,10 +77,11 @@ JSON や PNG の追加だけではブロック自体は登録されません。
 ## ローカルで同じ検査を行う
 
 Java のビルドには Java 17・Gradle 8.8 と Forge などの依存取得が必要です。
-素材検査には Python 3.11 以降、JS 構文検査には Node.js を使用します。Python 側の追加ライブラリは不要です。
+素材検査には Python 3.11 以降、JS 構文検査には Node.js を使用します。PNG 見本の生成には Pillow が必要です（`requirements-dev.txt`）。
 
 ```sh
 gradle --no-daemon build
+python3 -m pip install -r requirements-dev.txt
 python3 -m unittest discover -s tests -v
 python3 scripts/asset_catalog.py
 node --check tools/preview/viewer.js

@@ -1,0 +1,9 @@
+# 開発ルール
+
+- アイテム・ブロック・UI の追加または見た目の変更時は、ルートの `テクスチャ一覧.md` も必ず更新する。
+- 元テクスチャ PNG と、アイテムの手持ち／ブロックの設置時のモデル PNG を掲載する。
+- UI は元画像に加え画面全体の PNG 見本と用途を載せる。未対応の UI が増えた場合は一覧生成処理も拡張する。
+- `python3 -m pip install -r requirements-dev.txt` の後、`python3 scripts/generate_texture_index.py` で生成する。
+- `python3 scripts/generate_texture_index.py --check` と自動テストを通す。生成 PNG と Markdown は Git に含める。
+- 生成見本とゲーム内スクリーンショットを混同しない。未登録の説明用素材は明記する。
+- サイトはユーザーが明示的に更新を依頼するまでデプロイしない。通常は Markdown を中心に更新する。
