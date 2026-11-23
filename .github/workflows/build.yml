@@ -38,7 +38,7 @@ jobs:
         with:
           gradle-version: '8.8'
       - name: Compile Forge mod and run Java tests
-        run: gradle --no-daemon build
+        run: python scripts/ci_gradle.py
       - name: Verify compiled JAR contents
         run: python scripts/verify_jar.py
       - name: Resource tests
