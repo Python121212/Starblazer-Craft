@@ -2,7 +2,9 @@ package dev.starblazer.craft.environment;
 
 /** Game-scale atmosphere; no Minecraft classes, world scans or allocations per block. */
 public final class AtmosphereProfile {
-    public static final double MAX_ALTITUDE = 5000.0;
+    public static final double SPACE_ALTITUDE = 5000.0;
+    /** Compatibility alias: a boundary, no longer a flight ceiling. */
+    @Deprecated public static final double MAX_ALTITUDE = SPACE_ALTITUDE;
     public static final double HYPOXIA_START = 1500.0;
     private AtmosphereProfile() {}
 
