@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "starblazercraft:block/example_block" }
+  }
+}
