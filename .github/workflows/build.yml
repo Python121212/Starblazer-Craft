@@ -4,7 +4,7 @@ on:
   pull_request:
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,3 +18,9 @@ jobs:
         with:
           name: starblazer-craft
           path: build/libs/*.jar
+      - name: Publish release
+        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create v0.0.1 build/libs/*.jar --target "$GITHUB_SHA" --title "Starblazer Craft 0.0.1 — Forge 1.20.1" --notes "Minecraft 1.20.1 / Forge 47.x 用の空の MOD。機能追加なし。JAR 構造検査済み、ゲーム実起動は未検証。"
