@@ -125,7 +125,7 @@ def generate():
         status='手持ち' if held else '設置時'
         if 'docs/examples' in source.as_posix(): status+='（説明用・未登録）'
         lines.append(f"| `{model['id']}` | {status} | ![{status}]({target}) | [JSON]({source.relative_to(ROOT).as_posix()}) |")
-    lines+=['','## UI','','現在、独自 UI は未実装です。UI 追加時はテクスチャと画面全体の PNG 見本・用途をここに追記してください。',
+    lines+=['', '## レンチの参考画像', '', '[IMG_0185.png](画像/IMG_0185.png) をもとに、銀色の本体・黒い輪郭・斜めの持ち手を再現しています。', '参考画像のサイズは自由です。本番は16×16、手持ちモデルは輪郭に沿って厚みを付けています。', '', '## UI','','現在、独自 UI は未実装です。UI 追加時はテクスチャと画面全体の PNG 見本・用途をここに追記してください。',
             '', '## 更新方法', '', '```sh', 'python3 -m pip install -r requirements-dev.txt',
             'python3 scripts/generate_texture_index.py', 'python3 scripts/generate_texture_index.py --check','```',
             '', '一覧とモデル見本は自動生成です。説明の変更は `scripts/generate_texture_index.py` に反映してください。',
