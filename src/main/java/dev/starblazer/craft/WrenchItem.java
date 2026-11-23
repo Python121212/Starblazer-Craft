@@ -7,6 +7,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -16,6 +17,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -28,6 +31,16 @@ public class WrenchItem extends Item {
 
     private static SelectionBounds.Point point(BlockPos p) { return new SelectionBounds.Point(p.getX(), p.getY(), p.getZ()); }
     private static void message(Player p, String key) { p.displayClientMessage(Component.translatable("message.starblazercraft." + key), true); }
+    /** Broadcast once from the server, using the selected block's contextual placement sound. */
+    private static void playSelectionSound(Level level, BlockPos pos, Player player) {
+        if (level.isClientSide) return;
+        BlockState state = level.getBlockState(pos);
+        SoundType sound = state.getSoundType(level, pos, player);
+        // Match vanilla block-placement volume/pitch. Null includes the selecting player.
+        level.playSound(null, pos, sound.getPlaceSound(), SoundSource.BLOCKS,
+            (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
+    }
+
     private static boolean usable(Player p) { return !p.isSpectator() && p.mayBuild(); }
     private static boolean session(CompoundTag s, Player p, Level level) {
         return s.hasUUID("Owner") && s.getUUID("Owner").equals(p.getUUID())
@@ -60,6 +73,7 @@ public class WrenchItem extends Item {
             fresh.putLong("Core", pos.asLong());
             root.put(KEY, fresh);
             message(p, "started");
+            playSelectionSound(level, pos, p);
             return InteractionResult.CONSUME;
         }
         CompoundTag s = root.getCompound(KEY);
@@ -69,6 +83,7 @@ public class WrenchItem extends Item {
             s.putLong("First", pos.asLong());
             s.remove("Second");
             message(p, "first");
+            playSelectionSound(level, pos, p);
         } else {
             BlockPos first = BlockPos.of(s.getLong("First"));
             if (SelectionBounds.volume(point(first), point(pos)) > SelectionBounds.MAX_VOLUME) {
@@ -81,6 +96,7 @@ public class WrenchItem extends Item {
             s.putLong("Second", pos.asLong());
             // Intentionally no block removal/entity spawn until safe assembly is implemented.
             message(p, "selected");
+            playSelectionSound(level, pos, p);
         }
         return InteractionResult.CONSUME;
     }
@@ -125,6 +141,7 @@ public class WrenchItem extends Item {
         extras.add(LongTag.valueOf(pos.asLong()));
         s.put("Extras", extras);
         message(p, "added");
+        playSelectionSound(event.getLevel(), pos, p);
     }
 
     @Override

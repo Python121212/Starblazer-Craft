@@ -3,11 +3,12 @@
 Minecraft **1.20.1 / Forge 47.x / Java 17** 用の独立 MOD です。Create などへの依存はありません。
 船・航空機・宇宙艦へ向けた基盤を段階的に実装します。
 
-## 現在の内容（0.1.2）
+## 現在の内容（0.1.3）
 
 - レンチアイテム（日本語・英語表示、16×16 テクスチャ、厚みのある3Dモデル）。
 - 将来のコアを起点に対角2点を指定し、直方体の範囲を保存。
 - Shift＋左クリックで範囲外のブロックを追加選択。
+- 選択成功時、クリックしたブロックの設置音をその位置で再生。
 - コア・エンティティ化・物理は未実装。ワールドのブロックは変更しません。
 
 [レンチの操作・制限・テスト方法](docs/WRENCH.md)
@@ -31,7 +32,7 @@ python3 -m unittest discover -s tests -v
 python3 scripts/asset_catalog.py
 ```
 
-JAR: `build/libs/starblazer-craft-1.20.1-0.1.2.jar`
+JAR: `build/libs/starblazer-craft-1.20.1-0.1.3.jar`
 
 GitHub Actions でも Forge コンパイル・Java の選択計算テスト・素材検査を行います。
 ゲーム実起動・マルチプレイの操作テストとは別です。
