@@ -29,3 +29,10 @@ JAR はバージョン管理に含めません。
 ## 動作確認について
 
 JAR の構造とメタデータは検査していますが、Minecraft / Forge の実起動テストは未実施です。
+
+## テクスチャ・JSON の見本
+
+[日本語ガイド](docs/TEXTURES.md) に、16×16 PNG の形とモデル・blockstates JSON の対応をまとめています。
+素材は `docs/examples/` にあり、現段階では JAR に入りません。ゲーム内の機能は追加していません。
+
+![上面・側面・アイテムの拡大見本](docs/images/texture-guide.png)
