@@ -3,8 +3,9 @@
 Minecraft **1.20.1 / Forge 47.x / Java 17** 用の独立 MOD です。Create などへの依存はありません。
 船・航空機・宇宙艦へ向けた基盤を段階的に実装します。
 
-## 現在の内容（0.1.3）
+## 現在の内容（0.1.4）
 
+- クリエイティブインベントリに「Starblazer Craft」専用タブ（レンチのアイコン）。
 - レンチアイテム（日本語・英語表示、16×16 テクスチャ、厚みのある3Dモデル）。
 - 将来のコアを起点に対角2点を指定し、直方体の範囲を保存。
 - Shift＋左クリックで範囲外のブロックを追加選択。
@@ -32,13 +33,15 @@ python3 -m unittest discover -s tests -v
 python3 scripts/asset_catalog.py
 ```
 
-JAR: `build/libs/starblazer-craft-1.20.1-0.1.3.jar`
+JAR: `build/libs/starblazer-craft-1.20.1-0.1.4.jar`
 
 GitHub Actions でも Forge コンパイル・Java の選択計算テスト・素材検査を行います。
 ゲーム実起動・マルチプレイの操作テストとは別です。
 ソースは main、配布 JAR は Releases に置き、JAR は Git 管理に含めません。
 
 ## 資料・素材確認
+
+- [専用クリエイティブタブの説明](docs/CREATIVE_TAB.md)
 
 - [テクスチャ一覧（手持ち・設置時の PNG 見本）](テクスチャ一覧.md)
 

@@ -14,5 +14,6 @@
   "message.starblazercraft.already_added": "Block already added.",
   "message.starblazercraft.too_many_extras": "Maximum 256 extra blocks.",
   "message.starblazercraft.too_far": "Too far from core (bounding box limit: 4096 cells).",
-  "message.starblazercraft.added": "Extra block selected."
+  "message.starblazercraft.added": "Extra block selected.",
+  "itemGroup.starblazercraft.main": "Starblazer Craft"
 }

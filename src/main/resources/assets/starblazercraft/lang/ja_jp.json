@@ -14,5 +14,6 @@
   "message.starblazercraft.already_added": "追加済みのブロックです。",
   "message.starblazercraft.too_many_extras": "追加できるブロックは最大256個です。",
   "message.starblazercraft.too_far": "コアから遠すぎます（コアとの直方体が4096マス以内）。",
-  "message.starblazercraft.added": "ブロックを追加選択しました。"
+  "message.starblazercraft.added": "ブロックを追加選択しました。",
+  "itemGroup.starblazercraft.main": "Starblazer Craft"
 }

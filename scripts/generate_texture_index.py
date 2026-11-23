@@ -7,7 +7,7 @@ import io
 import math
 from pathlib import Path
 import tempfile
-from PIL import Image
+from PIL import Image, ImageDraw
 from asset_catalog import ROOT, collect
 
 SIDES = {
@@ -98,10 +98,30 @@ def png(image):
     out=io.BytesIO();image.save(out,format='PNG');return out.getvalue()
 
 
+def creative_tab_preview(texture):
+    """Documentation-only schematic, not a game screenshot or runtime GUI texture."""
+    image = Image.new('RGBA', (360, 290), (28, 38, 52, 255))
+    d = ImageDraw.Draw(image)
+    d.text((16, 12), 'CREATIVE INVENTORY - LAYOUT SKETCH', fill='white')
+    d.rectangle((16, 48, 344, 270), fill='#c6c6c6', outline='#ffffff', width=2)
+    d.rectangle((22, 29, 62, 55), fill='#c6c6c6', outline='white', width=2)
+    icon = texture.resize((24, 24), Image.Resampling.NEAREST)
+    image.alpha_composite(icon, (30, 30))
+    d.text((30, 65), 'Starblazer Craft', fill='#303030')
+    for row in range(5):
+        for col in range(9):
+            x, y = 30 + col * 33, 88 + row * 31
+            d.rectangle((x, y, x + 29, y + 27), fill='#8b8b8b', outline='#eeeeee')
+    image.alpha_composite(icon, (33, 90))
+    d.text((30, 249), 'Wrench / more mod items in future', fill='#303030')
+    return image
+
+
 def generate():
     models, paths, dimensions=collect([ROOT/'src/main/resources/assets',ROOT/'docs/examples/assets'])
     textures={key:Image.open(path).convert('RGBA') for key,path in paths.items()}
     outputs={}
+    outputs['docs/images/catalog/ui/creative-tab.png']=png(creative_tab_preview(textures['starblazercraft:item/wrench']))
     lines=['# テクスチャ一覧', '', 'アイテム・ブロック・UI を追加／変更するたびに、この一覧と PNG 見本を更新します。',
            '', '**画像は JSON から生成した簡易見本で、ゲーム内スクリーンショットではありません。**',
            '手持ち画像は一人称右手の `display` 設定を適用したモデル単体の見本です（プレイヤーの手は描画しません）。',
@@ -125,7 +145,7 @@ def generate():
         status='手持ち' if held else '設置時'
         if 'docs/examples' in source.as_posix(): status+='（説明用・未登録）'
         lines.append(f"| `{model['id']}` | {status} | ![{status}]({target}) | [JSON]({source.relative_to(ROOT).as_posix()}) |")
-    lines+=['', '## レンチの参考画像', '', '[IMG_0185.png](画像/IMG_0185.png) をもとに、銀色の本体・黒い輪郭・斜めの持ち手を再現しています。', '参考画像のサイズは自由です。本番は16×16、手持ちモデルは輪郭に沿って厚みを付けています。', '', '## UI','','現在、独自 UI は未実装です。UI 追加時はテクスチャと画面全体の PNG 見本・用途をここに追記してください。',
+    lines+=['', '## レンチの参考画像', '', '[IMG_0185.png](画像/IMG_0185.png) をもとに、銀色の本体・黒い輪郭・斜めの持ち手を再現しています。', '参考画像のサイズは自由です。本番は16×16、手持ちモデルは輪郭に沿って厚みを付けています。', '', '## UI','','クリエイティブ専用タブ：**Starblazer Craft**（ID: `starblazercraft:main`）。レンチをアイコンとし、登録済みの本MODのアイテムを一覧表示します。通常のサバイバル用インベントリを増やす機能ではありません。', '', '![専用タブの配置イメージ](docs/images/catalog/ui/creative-tab.png)', '', '上図は説明用の配置図です。実機スクリーンショットではなく、実際の寸法・タブ位置・アイコン描画は異なります。背景・タブ枠はバニラUIを使用し、新規のゲーム用UIテクスチャはありません。レンチは従来の「道具と実用品」タブからも取得できます。',
             '', '## 更新方法', '', '```sh', 'python3 -m pip install -r requirements-dev.txt',
             'python3 scripts/generate_texture_index.py', 'python3 scripts/generate_texture_index.py --check','```',
             '', '一覧とモデル見本は自動生成です。説明の変更は `scripts/generate_texture_index.py` に反映してください。',
