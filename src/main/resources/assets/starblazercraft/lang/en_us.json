@@ -4,7 +4,7 @@
   "tooltip.starblazercraft.wrench_reset": "Shift + right-click air: clear selection (main hand recommended)",
   "tooltip.starblazercraft.selection": "Corners: %s / 2, extra blocks: %s",
   "message.starblazercraft.started": "Selection started. Right-click the first corner.",
-  "message.starblazercraft.need_core": "Right-click a core first. Core blocks are planned for a future update.",
+  "message.starblazercraft.need_core": "Right-click a core first.",
   "message.starblazercraft.core_unavailable": "Core is unloaded or missing.",
   "message.starblazercraft.first": "First corner saved. Right-click the opposite corner.",
   "message.starblazercraft.too_large": "Maximum volume: 4096 cells. Choose another second corner.",
@@ -15,5 +15,6 @@
   "message.starblazercraft.too_many_extras": "Maximum 256 extra blocks.",
   "message.starblazercraft.too_far": "Too far from core (bounding box limit: 4096 cells).",
   "message.starblazercraft.added": "Extra block selected.",
-  "itemGroup.starblazercraft.main": "Starblazer Craft"
+  "itemGroup.starblazercraft.main": "Starblazer Craft",
+  "block.starblazercraft.core": "Core"
 }

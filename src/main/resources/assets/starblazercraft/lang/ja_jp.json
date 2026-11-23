@@ -4,7 +4,7 @@
   "tooltip.starblazercraft.wrench_reset": "Shift＋空中右クリック：選択解除（メインハンド推奨）",
   "tooltip.starblazercraft.selection": "選択した端点：%s / 2、追加ブロック：%s",
   "message.starblazercraft.started": "選択開始。1つ目の端のブロックを右クリックしてください。",
-  "message.starblazercraft.need_core": "先にコアを右クリックしてください。コアは今後追加予定です。",
+  "message.starblazercraft.need_core": "先にコアを右クリックしてください。",
   "message.starblazercraft.core_unavailable": "コアが未読み込み、または存在しません。コアを確認してください。",
   "message.starblazercraft.first": "1点目を保存しました。対角のブロックを右クリックしてください。",
   "message.starblazercraft.too_large": "範囲は最大4096マスです。2点目を選び直してください。",
@@ -15,5 +15,6 @@
   "message.starblazercraft.too_many_extras": "追加できるブロックは最大256個です。",
   "message.starblazercraft.too_far": "コアから遠すぎます（コアとの直方体が4096マス以内）。",
   "message.starblazercraft.added": "ブロックを追加選択しました。",
-  "itemGroup.starblazercraft.main": "Starblazer Craft"
+  "itemGroup.starblazercraft.main": "Starblazer Craft",
+  "block.starblazercraft.core": "コア"
 }
