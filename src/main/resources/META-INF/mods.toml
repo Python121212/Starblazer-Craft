@@ -4,7 +4,7 @@ license="All Rights Reserved"
 
 [[mods]]
 modId="starblazercraft"
-version="0.1.3"
+version="0.1.4"
 displayName="Starblazer Craft"
 description='''独立した船体システムの試作。レンチによる範囲選択。'''
 
