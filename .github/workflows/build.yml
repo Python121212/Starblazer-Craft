@@ -1,26 +1,62 @@
-name: Build empty mod
+name: Build and test
 on:
   push:
   pull_request:
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python scripts/build.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Unit tests and reproducible JAR check
+        run: python -m unittest discover -s tests -v
+      - name: Validate assets and generate 3D preview
+        run: python scripts/asset_catalog.py
+      - name: Check viewer JavaScript syntax
+        run: node --check tools/preview/viewer.js
       - uses: actions/upload-artifact@v4
         with:
-          name: starblazer-craft
+          name: mod-jar
           path: build/libs/*.jar
-      - name: Publish release
-        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: asset-preview
+          path: build/preview/
+      - name: Test summary
         run: |
-          gh release create v0.0.1 build/libs/*.jar --target "$GITHUB_SHA" --title "Starblazer Craft 0.0.1 — Forge 1.20.1" --notes "Minecraft 1.20.1 / Forge 47.x 用の空の MOD。機能追加なし。JAR 構造検査済み、ゲーム実起動は未検証。"
+          echo '## 検査完了' >> "$GITHUB_STEP_SUMMARY"
+          echo '- 単体テスト・JAR 再現性・JSON 参照・PNG 整合性・JS 構文を検査しました。' >> "$GITHUB_STEP_SUMMARY"
+          echo '- asset-preview を取得するか GitHub Pages で素材を確認できます。' >> "$GITHUB_STEP_SUMMARY"
+          echo '- ゲーム起動・物理・描画・マルチの実機テストではありません。' >> "$GITHUB_STEP_SUMMARY"
+  pages:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.ENABLE_PAGES == 'true'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: asset-preview
+          path: site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - uses: actions/deploy-pages@v4
+        id: deployment

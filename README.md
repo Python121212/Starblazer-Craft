@@ -36,3 +36,13 @@ JAR の構造とメタデータは検査していますが、Minecraft / Forge �
 素材は `docs/examples/` にあり、現段階では JAR に入りません。ゲーム内の機能は追加していません。
 
 ![上面・側面・アイテムの拡大見本](docs/images/texture-guide.png)
+
+## GitHub 自動テスト・3D 素材ラボ
+
+push / PR ごとにテスト・ビルド・素材検査を実行し、JAR とブラウザー用ビューアーを Artifact に保存します。
+初回設定を行うと、main では GitHub Pages にも公開できます。
+
+- [素材ラボ（テクスチャと回転可能な 3D 見本）](https://python121212.github.io/Starblazer-Craft/)
+- [操作方法・素材の追加・自動検査の範囲](docs/AUTOMATION.md)
+
+ゲーム実行テストではありません。現在は物理計算の実装・性能検査もまだ含まれません。
