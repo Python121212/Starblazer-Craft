@@ -21,7 +21,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.8'
-      - run: gradle --no-daemon build
+      - run: python scripts/ci_gradle.py
       - name: Verify compiled JAR contents
         run: python scripts/verify_jar.py
       - run: python -m unittest discover -s tests -v
