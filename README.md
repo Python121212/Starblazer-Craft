@@ -3,7 +3,7 @@
 Minecraft **1.20.1 / Forge 47.x / Java 17** 用の独立 MOD です。Create などへの依存はありません。
 船・航空機・宇宙艦へ向けた基盤を段階的に実装します。
 
-## 現在の内容（0.1.1）
+## 現在の内容（0.1.2）
 
 - レンチアイテム（日本語・英語表示、16×16 テクスチャ、厚みのある3Dモデル）。
 - 将来のコアを起点に対角2点を指定し、直方体の範囲を保存。
@@ -31,7 +31,7 @@ python3 -m unittest discover -s tests -v
 python3 scripts/asset_catalog.py
 ```
 
-JAR: `build/libs/starblazer-craft-1.20.1-0.1.1.jar`
+JAR: `build/libs/starblazer-craft-1.20.1-0.1.2.jar`
 
 GitHub Actions でも Forge コンパイル・Java の選択計算テスト・素材検査を行います。
 ゲーム実起動・マルチプレイの操作テストとは別です。
