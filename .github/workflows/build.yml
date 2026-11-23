@@ -37,7 +37,7 @@ jobs:
           echo '- asset-preview を取得するか GitHub Pages で素材を確認できます。' >> "$GITHUB_STEP_SUMMARY"
           echo '- ゲーム起動・物理・描画・マルチの実機テストではありません。' >> "$GITHUB_STEP_SUMMARY"
   pages:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.ENABLE_PAGES == 'true'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: test
     runs-on: ubuntu-latest
     permissions:

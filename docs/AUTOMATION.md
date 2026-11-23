@@ -9,10 +9,10 @@
 
 素材ラボ: <https://python121212.github.io/Starblazer-Craft/>
 
-初回だけ、リポジトリの **Settings → Pages → Source → GitHub Actions** を指定し、
-**Settings → Secrets and variables → Actions → Variables** に `ENABLE_PAGES` = `true` を追加してください。
-その後、Build and test を main で手動実行します。未設定時は Pages ジョブをスキップし、テストと Artifact 保存のみ行います。
-この環境の GitHub 連携権限では Pages の有効化が許可されなかったため、この初回設定は所有者の操作が必要です。
+GitHub Pages は有効化済みです。main のテスト成功後に自動デプロイします。
+`ENABLE_PAGES` 変数の設定は不要です。
+手動で更新する場合は Build and test を main で実行してください。
+
 リポジトリの公開設定や契約によって Pages の利用条件が異なる場合があります。
 Pages の公開に失敗しても、成功済みのテストと Artifact は確認できます。
 
